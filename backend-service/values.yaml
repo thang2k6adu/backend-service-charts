@@ -1,13 +1,13 @@
 image:
-  repository: ghcr.io/thang2k6adu/pp191225-be/be:develop
+  repository: ghcr.io/thang2k6adu/pp191225-be/be
   pullPolicy: Always # Always cho :latest tag (dev), IfNotPresent cho versioned tags
-  tag: "" # Mặc định dùng Chart.appVersion, override khi deploy
+  tag: "91776ad92b4761c49707ecfc81efb42e196e6528" # Mặc định dùng Chart.appVersion, override khi deploy
 
 imagePullSecrets: []
 # - name: registry-secret  # Uncomment nếu dùng private registry
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "pp191225-api-service"
 
 replicaCount: 2
 
@@ -51,8 +51,8 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 8080
-  targetPort: 8080 #đổi so với port app bên trong container
+  port: 3000
+  targetPort: 3000 #đổi so với port app bên trong container
   annotations: {}
 
 ingress:
@@ -63,7 +63,7 @@ ingress:
     # nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/rate-limit: "100"
   hosts:
-    - host: api.example.com
+    - host: pp191225.api.thang2k6adu.com
       paths:
         - path: /
           pathType: Prefix
@@ -78,9 +78,8 @@ resources:
 
 livenessProbe:
   httpGet:
-    path: /health
-    # ping thẳng vào pod-ip:port
-    port: 8080
+    path: /api/health
+    port: 3000
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
@@ -89,8 +88,8 @@ livenessProbe:
 
 readinessProbe:
   httpGet:
-    path: /ready
-    port: 8080
+    path: /api/health
+    port: 3000
   initialDelaySeconds: 10
   periodSeconds: 5
   timeoutSeconds: 3
@@ -99,8 +98,8 @@ readinessProbe:
 
 startupProbe:
   httpGet:
-    path: /healthz
-    port: 8080
+    path: /api/health
+    port: 3000
   initialDelaySeconds: 0
   periodSeconds: 10
   timeoutSeconds: 3
@@ -113,20 +112,13 @@ autoscaling:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 80
-env:
-  - name: PORT
-    value: "8080"
-  - name: NODE_ENV
-    value: "production"
-  - name: LOG_LEVEL
-    value: "info"
 
 # Environment variables from ConfigMap & Secret
-envFrom: []
-  # - configMapRef:
-  #     name: app-config
-  # - secretRef:
-  #     name: app-secrets
+envFrom:
+  - configMapRef:
+      name: pp191225-config
+  - secretRef:
+      name: pp191225-secret
 
 configMap:
   enabled: false
@@ -203,7 +195,7 @@ affinity:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - '{{ include "chart.fullname" . }}'
+                  - dev-pp191225-api-service
           topologyKey: kubernetes.io/hostname
 
 # Khai báo Prometheus ServiceMonitor, dùng với Prometheus Operator, để tự động cấu hình scrape và lấy metrics
