@@ -109,7 +109,7 @@ helm repo index . --url https://thang2k6adu.github.io/backend-service-charts
 ### Push lên GitHub (branch gh-pages)
 ```bash
 git add .
-git commit -m "publish helm chart pp191225-api-service 0.1.0"
+git commit -m "publish helm chart backend-service-chart 0.1.0"
 git push origin gh-pages
 ```
 

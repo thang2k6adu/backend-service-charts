@@ -7,7 +7,7 @@ imagePullSecrets: []
 # - name: registry-secret  # Uncomment nếu dùng private registry
 
 nameOverride: ""
-fullnameOverride: "pp191225-api-service"
+fullnameOverride: "backend-service-chart"
 
 replicaCount: 2
 
@@ -195,7 +195,7 @@ affinity:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - dev-pp191225-api-service
+                  - dev-backend-service-chart
           topologyKey: kubernetes.io/hostname
 
 # Khai báo Prometheus ServiceMonitor, dùng với Prometheus Operator, để tự động cấu hình scrape và lấy metrics

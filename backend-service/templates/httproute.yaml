@@ -1,12 +1,12 @@
 {{- if .Values.httpRoute.enabled -}}
-{{- $fullName := include "pp191225-api-service.fullname" . -}}
+{{- $fullName := include "backend-service-chart.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "pp191225-api-service.labels" . | nindent 4 }}
+    {{- include "backend-service-chart.labels" . | nindent 4 }}
   {{- with .Values.httpRoute.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

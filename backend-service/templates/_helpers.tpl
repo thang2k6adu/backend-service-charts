@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "pp191225-api-service.name" -}}
+{{- define "backend-service-chart.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "pp191225-api-service.fullname" -}}
+{{- define "backend-service-chart.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "pp191225-api-service.chart" -}}
+{{- define "backend-service-chart.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "pp191225-api-service.labels" -}}
-helm.sh/chart: {{ include "pp191225-api-service.chart" . }}
-{{ include "pp191225-api-service.selectorLabels" . }}
+{{- define "backend-service-chart.labels" -}}
+helm.sh/chart: {{ include "backend-service-chart.chart" . }}
+{{ include "backend-service-chart.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "pp191225-api-service.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "pp191225-api-service.name" . }}
+{{- define "backend-service-chart.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "backend-service-chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "pp191225-api-service.serviceAccountName" -}}
+{{- define "backend-service-chart.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "pp191225-api-service.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "backend-service-chart.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
