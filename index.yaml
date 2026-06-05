@@ -3,12 +3,12 @@ entries:
   backend-service-chart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-04-22T18:36:33.588482529+07:00"
+    created: "2026-06-05T10:34:11.833414463+07:00"
     description: A Helm chart for Kubernetes
-    digest: 22d76c326212e90c6f9454233cdd712250cf174c8cb9b701ec21f0d327847c81
+    digest: b6bd4ba2cbd49ccdbe67936bd5ad0cd49e2e7d8e4871b237d060df43357694c2
     name: backend-service-chart
     type: application
     urls:
     - https://thang2k6adu.github.io/backend-service-charts/backend-service-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-22T18:36:33.587852099+07:00"
+generated: "2026-06-05T10:34:11.833034466+07:00"
